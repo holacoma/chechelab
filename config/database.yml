@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  port: 5432
+  username: <%= ENV.fetch("DB_USER", "buk") %>
+  password: <%= ENV.fetch("DB_PASS", "") %>
+
+development:
+  <<: *default
+  database: chechelab_development
+
+test:
+  <<: *default
+  database: chechelab_test
+
+production:
+  <<: *default
+  database: chechelab_production
+  username: <%= ENV["DB_USER"] %>
+  password: <%= ENV["DB_PASS"] %>

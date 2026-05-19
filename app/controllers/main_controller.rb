@@ -11,6 +11,11 @@ class MainController < ApplicationController
   private
 
   def solve(sentence)
-    raise NotImplementedError
+    words = sentence.split
+    words.map! do |word|
+      word.reverse! if word.length >= 5
+      word
+    end
+    words.join(" ")
   end
 end

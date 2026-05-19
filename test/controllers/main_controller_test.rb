@@ -6,40 +6,20 @@ class MainControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # spin_words: reverses words with 5 or more letters
-  test "spin_words reverses long words" do
-    post spin_words_url, params: { sentence: "Hey fellow warriors" }
-    assert_response :success
-    assert_equal "Hey wollef sroirraw", response.parsed_body["result"]
-  end
+  context "spin_words" do
+    examples = [
+      ["Hey fellow warriors", "Hey wollef sroirraw"],
+      ["This is a test", "This is a test"],
+      ["This is another test", "This is rehtona test"],
+      ["warriors", "sroirraw"],
+      ["hey", "hey"],
+      ["Hello world", "olleH dlrow"]
+    ]
 
-  test "spin_words leaves short words untouched" do
-    post spin_words_url, params: { sentence: "This is a test" }
-    assert_response :success
-    assert_equal "This is a test", response.parsed_body["result"]
-  end
-
-  test "spin_words handles mix of short and long words" do
-    post spin_words_url, params: { sentence: "This is another test" }
-    assert_response :success
-    assert_equal "This is rehtona test", response.parsed_body["result"]
-  end
-
-  test "spin_words with a single long word" do
-    post spin_words_url, params: { sentence: "warriors" }
-    assert_response :success
-    assert_equal "sroirraw", response.parsed_body["result"]
-  end
-
-  test "spin_words with a single short word" do
-    post spin_words_url, params: { sentence: "hey" }
-    assert_response :success
-    assert_equal "hey", response.parsed_body["result"]
-  end
-
-  test "spin_words reverses exactly 5-letter words" do
-    post spin_words_url, params: { sentence: "Hello world" }
-    assert_response :success
-    assert_equal "olleH dlrow", response.parsed_body["result"]
+    should_for "returns the expected transformation", examples do |sentence, expected|
+      post spin_words_url, params: { sentence: sentence }
+      assert_response :success
+      assert_equal expected, response.parsed_body["result"]
+    end
   end
 end

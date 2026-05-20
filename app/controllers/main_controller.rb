@@ -8,4 +8,3 @@ class MainController < ApplicationController
     render json: { result: result }
   end
 end
-  

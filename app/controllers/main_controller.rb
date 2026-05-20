@@ -4,18 +4,7 @@ class MainController < ApplicationController
 
   def spin_words
     sentence = params[:sentence].to_s
-    result = solve(sentence)
+    result = SpinWords::Solver.call(sentence)
     render json: { result: result }
-  end
-
-  private
-
-  def solve(sentence)
-    words = sentence.split
-    words.map! do |word|
-      word.reverse! if word.length >= 5
-      word
-    end
-    words.join(" ")
   end
 end

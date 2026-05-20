@@ -4,7 +4,8 @@ class MainController < ApplicationController
 
   def spin_words
     sentence = params[:sentence].to_s
-    result = SpinWords::Solver.call(sentence)
+    result = SpinWords.call(sentence)
     render json: { result: result }
   end
 end
+  

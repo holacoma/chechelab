@@ -9,7 +9,6 @@ class ZerosTest < ActiveSupport::TestCase
   context "Sample Tests" do
     should "pass sample tests" do
       assert_equal 0, zeros(0), "Testing with n = 0"
-
     end
 
     should "pass with 6" do
